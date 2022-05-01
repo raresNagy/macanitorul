@@ -1,6 +1,5 @@
 // Imports
-import { userMention } from '@discordjs/builders';
-import DiscordJS, { Intents, Interaction, InteractionCollector, Message, MessageAttachment, Options, User } from 'discord.js'
+import DiscordJS, { Intents, Options} from 'discord.js'
 import dotenv from 'dotenv'
 import fs from 'node:fs';
 dotenv.config()
@@ -45,7 +44,7 @@ client.on('ready', () => {
                 name: 'sezon',
                 description: 'Numele sau numarul sezonului.',
                 required: true,
-                type: DiscordJS.Constants.ApplicationCommandOptionTypes.STRING
+                type: DiscordJS.Constants.ApplicationCommandOptionTypes.STRING,
             }
         ]
     })

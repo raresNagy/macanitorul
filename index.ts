@@ -29,11 +29,19 @@ client.on('ready', () => {
         description: 'Vezi un robot Xeo din sezonul precizat',
         options: [
             {
-                name: 'sezon',
-                description: 'Numele sau numarul sezonului.',
+                name: 'season',
+                description: 'Name, year, number or span of the FTC season.',
                 required: true,
-                type: DiscordJS.Constants.ApplicationCommandOptionTypes.STRING,
+                type: DiscordJS.Constants.ApplicationCommandOptionTypes.STRING
+            },
+
+            {
+                name: 'team',
+                description: "The number of the team whose robot you wish to see",
+                required: true,
+                type: DiscordJS.Constants.ApplicationCommandOptionTypes.NUMBER
             }
+
         ]
     })
 })
@@ -45,29 +53,26 @@ client.on('interactionCreate', async (interaction) => {
 
     const { commandName, options } = interaction
 
-    if (commandName === 'ping') {
-        interaction.reply({
-            content: 'pong',
-            ephemeral: true,
-        })
-    }
-    else if (commandName === 'robot') {
-        const sezon = options.getString('sezon')
-        if (sezon == data.FreightFrenzy.number || sezon == data.FreightFrenzy.year || sezon == data.FreightFrenzy.span || sezon == data.FreightFrenzy.name) {
+    if (commandName === 'robot') {
+        const season = options.getString('season')!
+        const teamnr = options.getNumber('team')!
+        
+
+        if (season == data.FreightFrenzy.number || season == data.FreightFrenzy.year || season == data.FreightFrenzy.span || season == data.FreightFrenzy.name) {
             interaction.reply({
-                content: 'Robot Xeo ' + data.FreightFrenzy.team[14278].bot,
+                content: `Here: ${data.FreightFrenzy.team[teamnr].bot}`,
                 ephemeral: false,
             })
         }
-        else if (sezon =='5' || sezon == '2020' || sezon == 'Ultimate Goal') {
+        else if (season == data.UltimateGoal.number || season == data.UltimateGoal.year || season == data.UltimateGoal.span || data.UltimateGoal.name) {
             interaction.reply({
-                content: 'Robotul din sezonul ' + sezon + ' ' + data.UltimateGoal.team[14278].bot,
+                content: `Here: ${data.UltimateGoal.team[teamnr].bot}`,
                 ephemeral: false,
             })
         }
-        else if (sezon == data.Skystone.number || sezon == data.Skystone.year || sezon == data.Skystone.span || sezon == data.Skystone.name) {
+        else if (season == data.Skystone.number || season == data.Skystone.year || season == data.Skystone.span || season == data.Skystone.name) {
             interaction.reply({
-                content: 'Robotul din sezonul ' + sezon + ' ' + data.Skystone.team[14278].bot,
+                content: `Here: ${data.Skystone.team[teamnr].bot}`,
                 ephemeral: false,
             })
         }

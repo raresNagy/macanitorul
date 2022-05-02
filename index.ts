@@ -1,5 +1,6 @@
 import DiscordJS, { Intents, Options } from 'discord.js'
 import dotenv from 'dotenv'
+import fs from 'fs'
 dotenv.config()
 
 const client = new DiscordJS.Client({
@@ -8,6 +9,8 @@ const client = new DiscordJS.Client({
         Intents.FLAGS.GUILD_MESSAGES,
     ]
 })
+
+const data = JSON.parse(fs.readFileSync('data.json', 'utf8'))
 
 client.on('ready', () => {
     console.log('bot is ready')
@@ -20,11 +23,6 @@ client.on('ready', () => {
         commands = guild.commands
     else
         commands = client.application?.commands
-
-    commands?.create({
-        name: 'ping',
-        description: 'Replies with pong.',
-    })
 
     commands?.create({
         name: 'robot',
@@ -55,21 +53,21 @@ client.on('interactionCreate', async (interaction) => {
     }
     else if (commandName === 'robot') {
         const sezon = options.getString('sezon')
-        if (sezon === '6' || sezon === '2021' || sezon === 'Freight Frenzy') {
+        if (sezon == data.FreightFrenzy.number || sezon == data.FreightFrenzy.year || sezon == data.FreightFrenzy.span || sezon == data.FreightFrenzy.name) {
             interaction.reply({
-                content: 'Robotul din sezonul ' + sezon + ' https://imgur.com/a/gJRE1gs',
+                content: 'Robot Xeo ' + data.FreightFrenzy.team[14278].bot,
                 ephemeral: false,
             })
         }
-        else if (sezon === '5' || sezon === '2020' || sezon === 'Ultimate Goal') {
+        else if (sezon =='5' || sezon == '2020' || sezon == 'Ultimate Goal') {
             interaction.reply({
-                content: 'Robotul din sezonul ' + sezon + ' https://imgur.com/a/2vOFlMC',
+                content: 'Robotul din sezonul ' + sezon + ' ' + data.UltimateGoal.team[14278].bot,
                 ephemeral: false,
             })
         }
-        else if (sezon === '4' || sezon === '2019' || sezon === 'Skystone') {
+        else if (sezon == data.Skystone.number || sezon == data.Skystone.year || sezon == data.Skystone.span || sezon == data.Skystone.name) {
             interaction.reply({
-                content: 'Robotul din sezonul ' + sezon + ' https://imgur.com/a/ZtkN6l1',
+                content: 'Robotul din sezonul ' + sezon + ' ' + data.Skystone.team[14278].bot,
                 ephemeral: false,
             })
         }
@@ -77,9 +75,7 @@ client.on('interactionCreate', async (interaction) => {
             interaction.reply({
                 content: 'Sezonul acesta nu există/nu a fost adăugat încă\nScrie numele, numarul, sau anul altui sezon',
                 ephemeral: true,
-
             })
-
         }
     }
 })

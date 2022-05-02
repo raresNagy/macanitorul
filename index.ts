@@ -1,15 +1,6 @@
-// Imports
-import DiscordJS, { Intents, Options} from 'discord.js'
+import DiscordJS, { Intents, Options } from 'discord.js'
 import dotenv from 'dotenv'
-import fs from 'node:fs';
 dotenv.config()
-const commands = []
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
-
-for (const file of commandFiles) {
-    const command = require('./commands/${file}')
-    commands.push(command.data.toJSON());
-}
 
 const client = new DiscordJS.Client({
     intents: [
@@ -18,9 +9,8 @@ const client = new DiscordJS.Client({
     ]
 })
 
-
 client.on('ready', () => {
-    console.log('MAC MAC MAC')
+    console.log('bot is ready')
 
     const guildId = '816709720894472215'
     const guild = client.guilds.cache.get(guildId)
@@ -50,15 +40,12 @@ client.on('ready', () => {
     })
 })
 
-
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isCommand()) {
         return
     }
 
     const { commandName, options } = interaction
-
-
 
     if (commandName === 'ping') {
         interaction.reply({
@@ -70,25 +57,25 @@ client.on('interactionCreate', async (interaction) => {
         const sezon = options.getString('sezon')
         if (sezon === '6' || sezon === '2021' || sezon === 'Freight Frenzy') {
             interaction.reply({
-                content: 'Robotul din sezonul '+ sezon +' https://imgur.com/a/gJRE1gs',
+                content: 'Robotul din sezonul ' + sezon + ' https://imgur.com/a/gJRE1gs',
                 ephemeral: false,
             })
         }
         else if (sezon === '5' || sezon === '2020' || sezon === 'Ultimate Goal') {
             interaction.reply({
-                content: 'Robotul din sezonul '+ sezon + ' https://imgur.com/a/2vOFlMC',
+                content: 'Robotul din sezonul ' + sezon + ' https://imgur.com/a/2vOFlMC',
                 ephemeral: false,
             })
         }
         else if (sezon === '4' || sezon === '2019' || sezon === 'Skystone') {
             interaction.reply({
-                content: 'Robotul din sezonul '+ sezon +' https://imgur.com/a/ZtkN6l1',
+                content: 'Robotul din sezonul ' + sezon + ' https://imgur.com/a/ZtkN6l1',
                 ephemeral: false,
             })
         }
         else {
             interaction.reply({
-                content: 'Sezonul acesta nu exista\nscrie numele, numarul, sau anul sezonului',
+                content: 'Sezonul acesta nu există/nu a fost adăugat încă\nScrie numele, numarul, sau anul altui sezon',
                 ephemeral: true,
 
             })
